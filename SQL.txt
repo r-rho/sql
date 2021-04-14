@@ -8,6 +8,9 @@ Jobs(Job_id(PK), Job_title,Min_salary,Max_salary)
 Employees(Employee_id(PK) , First_name, Last_name, Email, Phone_number, Hire_date, Salary, Manager_id(FK),Job_id(FK),Department_id(FK))
 Dependents (Dependent_id(PK), First_name, Last_name, Relationship, Employee_id(FK))
 
+
+EMPLOYEE MANAGEMENT DATABASE CREATION
+
 CREATE TABLE Regions (Region_id INTEGER PRIMARY KEY NOT NULL, Region_name TEXT NOT NULL);
 CREATE TABLE Counries (Country_id INTEGER PRIMARY KEY NOT NULL, Country_name TEXT NOT NULL, Region_id INTEGER NOT NULL,
                         FOREIGN KEY(Region_id) REFERENCES Regions (Region_id)ON DELETE CASCADE ON UPDATE CASCADE);
