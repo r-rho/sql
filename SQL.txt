@@ -1,0 +1,28 @@
+SQL Schema for Hospital Management System
+Regions(Region_id(PK), region_name)
+Countries(Country_id,Country_name, Region_id(FK))
+Region_id INTEGER NOT NULL, FOREIGN KEY(Region_id) REFERENCES Regions (Region_id)ON DELETE CASCADE ON UPDATE CASCADE);
+Locations(Location_id(PK),Street_address,Postal_code,City,State_province,Country_id(FK))
+Departments(Department_id(PK),Department_name,Location_id(FK),Country_id(FK))
+Jobs(Job_id(PK), Job_title,Min_salary,Max_salary)
+Employees(Employee_id(PK) , First_name, Last_name, Email, Phone_number, Hire_date, Salary, Manager_id(FK),Job_id(FK),Department_id(FK))
+Dependents (Dependent_id(PK), First_name, Last_name, Relationship, Employee_id(FK))
+
+CREATE TABLE Regions (Region_id INTEGER PRIMARY KEY NOT NULL, Region_name TEXT NOT NULL);
+CREATE TABLE Counries (Country_id INTEGER PRIMARY KEY NOT NULL, Country_name TEXT NOT NULL, Region_id INTEGER NOT NULL,
+                        FOREIGN KEY(Region_id) REFERENCES Regions (Region_id)ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE TABLE Locations (Location_id INTEGER PRIMARY KEY NOT NULL, Street_Address TEXT NOT NULL,
+                          Postal_code TEXT NOT NULL, City TEXT NOT NULL, State_province TEXT NOT NULL,
+                          Country_id INTEGER NOT NULL, FOREIGN KEY(Country_id) REFERENCES Countries (Country_id)ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE TABLE Department(Department_id INTEGER PRIMARY KEY NOT NULL, Department_name TEXT NOT NULL,
+                        Location_id INTEGER NOT NULL, FOREIGN KEY(Location_id) REFERENCES Locations(Location_id) ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE TABLE Jobs(Job_id INTEGER PRIMARY KEY NOT NULL,Job_title TEXT NOT NULL, Min_salary INTEGER NOT NULL, Max_salary INTEGER NOT NULL);
+CREATE TABLE Employees(Employee_id INTEGER PRIMARY KEY NOT NULL,First_Name TEXT NOT NULL,Last_Name TEXT NOT NULL,
+                        Email TEXT NOT NULL, Phone_number INTEGER NOT NULL, Hire_date INTEGER NOT NULL, Salary NOT NULL,
+                        Manager_id INTEGER, Department_id INTEGER NOT NULL, Job_id INTEGER NOT NULL,
+                        FOREIGN KEY(Job_id) REFERENCES Jobs(Job_id),
+                        FOREIGN KEY(Department_id) REFERENCES Department (Department_id)ON DELETE CASCADE ON UPDATE CASCADE,
+                        FOREIGN KEY(Manager_id) REFERENCES Employees (Employee_id)ON DELETE NO ACTION ON UPDATE NO ACTION);
+CREATE TABLE Dependents(Dependent_id INTEGER PRIMARY KEY NOT NULL,First_Name TEXT NOT NULL, Last_name TEXT NOT NULL,
+                          Relationship TEXT NOT NULL, Employee_id INTEGER NOT NULL,
+                          FOREIGN KEY(Employee_id) REFERENCES Employees(Employee_id) ON DELETE CASCADE ON UPDATE CASCADE);
